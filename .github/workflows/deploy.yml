@@ -24,7 +24,7 @@ jobs:
                 echo `pwd`/mdbook >> $GITHUB_PATH
                 echo `pwd`/mdbook-tera >> $GITHUB_PATH
                 echo `pwd`/mdbook-toc >> $GITHUB_PATH
-            - uses: webfactory/ssh-agent@v0.5.2
+            - uses: webfactory/ssh-agent@v0.5.4
               with:
                   ssh-private-key: ${{ secrets.GH_ACTIONS_KEY }}
             - name: Deploy Github Pages
