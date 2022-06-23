@@ -4,8 +4,6 @@ import TemplaterPlugin from "main";
 import { resolve_tfile } from "utils/Utils";
 import { errorWrapperSync } from "utils/Error";
 
-//import { App } from "../obsidian-ex";
-
 export class CommandHandler {
     constructor(private app: App, private plugin: TemplaterPlugin) {}
 

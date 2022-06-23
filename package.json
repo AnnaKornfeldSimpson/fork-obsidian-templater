@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "node esbuild.config.mjs",
         "build": "node esbuild.config.mjs production",
-        "pretest": "eslint --ignore-path .gitignore src/",
+        "pretest": "eslint --ignore-path .gitignore src/ tests/",
         "test-build": "node esbuild.config.mjs production test",
         "test-dev": "node esbuild.config.mjs test",
         "commit": "cz",

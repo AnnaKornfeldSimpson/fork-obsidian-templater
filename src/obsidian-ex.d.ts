@@ -1,4 +1,5 @@
 import "obsidian";
+import { Plugin } from "obsidian";
 
 declare module "obsidian" {
   export interface SearchComponent extends AbstractTextComponent<HTMLInputElement> {
@@ -51,9 +52,16 @@ declare module "obsidian" {
     updateHotkeyVisibility(): void;
   }
 
+  export interface PluginRegistry {
+    getPlugin(id: string): Plugin | undefined;
+    plugins: Record<string, Plugin>;
+  }
+
   export interface App {
     commands: CommandRegistry;
     internalPlugins: InternalPlugins;
+
+    plugins: PluginRegistry;
 
     setting: SettingRegistry;
     viewRegistry: ViewRegistry;
