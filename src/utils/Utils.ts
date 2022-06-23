@@ -17,11 +17,11 @@ export function escape_RegExp(str: string): string {
 }
 
 export function generate_command_regex(): RegExp {
-    return /<%(?:-|_)?\s*[*~]{0,1}((?:.|\s)*?)(?:-|_)?%>/g;
+    return /<%(?:-|_)?\s*[*~]{0,1}((?:[^-_%]|[-_](?!%>)|%(?!>))*?)(?:-|_)?%>/g;
 }
 
 export function generate_dynamic_command_regex(): RegExp {
-    return /(<%(?:-|_)?\s*[*~]{0,1})\+((?:.|\s)*?%>)/g;
+    return /(<%(?:-|_)?\s*[*~]?)\+((?:[^%]|%(?!>))*%>)/g;
 }
 
 export function resolve_tfolder(app: App, folder_str: string): TFolder {
