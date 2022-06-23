@@ -17,7 +17,7 @@ export function escape_RegExp(str: string): string {
 }
 
 export function generate_command_regex(): RegExp {
-    return /<%[-_]?\s*[*~]?((?:[^-_%]|[-_](?!%>)|%(?!>))*?)[-_]?%>/g;
+    return /<%[-_]?\s*[*~]?((?:[^-_%]|[-_](?!%>)|%(?!>))*)[-_]?%>/g;
 }
 
 export function generate_dynamic_command_regex(): RegExp {
