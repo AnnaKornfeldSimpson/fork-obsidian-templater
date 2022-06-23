@@ -13,7 +13,7 @@ export class InternalModuleWeb extends InternalModule {
         );
     }
 
-    async create_dynamic_templates(): Promise<void> {}
+    async create_dynamic_templates(): Promise<void> { return; }
 
     async getRequest(url: string): Promise<Response> {
         const response = await fetch(url);

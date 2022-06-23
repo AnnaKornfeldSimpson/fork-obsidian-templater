@@ -98,32 +98,12 @@ export class Templater {
         filename?: string,
         open_new_note = true
     ): Promise<TFile> {
-        // TODO: Maybe there is an obsidian API function for that
         if (!folder) {
-            const new_file_location = this.app.vault.getConfig("newFileLocation");
-            switch (new_file_location) {
-                case "current": {
-                    const active_file = this.app.workspace.getActiveFile();
-                    if (active_file) {
-                        folder = active_file.parent;
-                    }
-                    break;
-                }
-                case "folder":
-                    folder = this.app.fileManager.getNewFileParent("");
-                    break;
-                case "root":
-                    folder = this.app.vault.getRoot();
-                    break;
-                default:
-                    break;
-            }
+            folder = this.app.fileManager.getNewFileParent(this.app.workspace.getActiveFile()?.path ?? "");
         }
 
-        // TODO: Change that, not stable atm
-        const created_note = await this.app.fileManager.createNewMarkdownFile(
-            folder,
-            filename ?? "Untitled"
+        const created_note = await this.app.vault.create(
+            normalizePath(folder + "/" + (filename ?? "Untitled")), ""
         );
 
         let running_config: RunningConfig;

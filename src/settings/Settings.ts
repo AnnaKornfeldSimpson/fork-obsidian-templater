@@ -82,7 +82,6 @@ export class TemplaterSettingTab extends PluginSettingTab {
                         this.plugin.settings.templates_folder = new_folder;
                         this.plugin.save_settings();
                     });
-                // @ts-ignore
                 cb.containerEl.addClass("templater_search");
             });
     }
@@ -228,7 +227,6 @@ export class TemplaterSettingTab extends PluginSettingTab {
                                 ] = new_template;
                                 this.plugin.save_settings();
                             });
-                        // @ts-ignore
                         cb.containerEl.addClass("templater_search");
                     })
                     .addExtraButton((cb) => {
@@ -236,9 +234,7 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             .setTooltip("Configure Hotkey")
                             .onClick(() => {
                                 // TODO: Replace with future "official" way to do this
-                                // @ts-ignore
                                 this.app.setting.openTabById("hotkeys");
-                                // @ts-ignore
                                 const tab = this.app.setting.activeTab;
                                 tab.searchInputEl.value = "Templater: Insert";
                                 tab.updateHotkeyVisibility();
@@ -392,7 +388,6 @@ export class TemplaterSettingTab extends PluginSettingTab {
                                 ].folder = new_folder;
                                 this.plugin.save_settings();
                             });
-                        // @ts-ignore
                         cb.containerEl.addClass("templater_search");
                     })
                     .addSearch((cb) => {
@@ -410,7 +405,6 @@ export class TemplaterSettingTab extends PluginSettingTab {
                                 ].template = new_template;
                                 this.plugin.save_settings();
                             });
-                        // @ts-ignore
                         cb.containerEl.addClass("templater_search");
                     })
                     .addExtraButton((cb) => {
@@ -499,7 +493,6 @@ export class TemplaterSettingTab extends PluginSettingTab {
                                 new_template;
                             this.plugin.save_settings();
                         });
-                    // @ts-ignore
                     cb.containerEl.addClass("templater_search");
                 })
                 .addExtraButton((cb) => {
@@ -558,7 +551,6 @@ export class TemplaterSettingTab extends PluginSettingTab {
                         this.plugin.settings.user_scripts_folder = new_folder;
                         this.plugin.save_settings();
                     });
-                // @ts-ignore
                 cb.containerEl.addClass("templater_search");
             });
 

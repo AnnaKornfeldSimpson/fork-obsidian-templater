@@ -32,6 +32,7 @@ RESOURCES.md
 .DS_Store
 .AppleDouble
 .LSOverride
+codeqldb
 
 # Icon must end with two \r
 Icon

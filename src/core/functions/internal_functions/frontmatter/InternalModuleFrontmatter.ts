@@ -4,7 +4,7 @@ import { ModuleName } from "editor/TpDocumentation";
 export class InternalModuleFrontmatter extends InternalModule {
     public name: ModuleName = "frontmatter";
 
-    async create_static_templates(): Promise<void> {}
+    async create_static_templates(): Promise<void> { return; }
 
     async create_dynamic_templates(): Promise<void> {
         const cache = this.app.metadataCache.getFileCache(

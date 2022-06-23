@@ -12,7 +12,7 @@ export class InternalModuleDate extends InternalModule {
         this.static_functions.set("yesterday", this.generate_yesterday());
     }
 
-    async create_dynamic_templates(): Promise<void> {}
+    async create_dynamic_templates(): Promise<void> { return; }
 
     generate_now(): (
         format?: string,

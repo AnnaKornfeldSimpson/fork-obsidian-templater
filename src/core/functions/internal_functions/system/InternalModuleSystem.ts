@@ -15,7 +15,7 @@ export class InternalModuleSystem extends InternalModule {
         this.static_functions.set("suggester", this.generate_suggester());
     }
 
-    async create_dynamic_templates(): Promise<void> {}
+    async create_dynamic_templates(): Promise<void> { return; }
 
     generate_clipboard(): () => Promise<string> {
         return async () => {

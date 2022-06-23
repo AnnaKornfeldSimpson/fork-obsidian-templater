@@ -5,12 +5,13 @@
         "inlineSources": true,
         "module": "ESNext",
         "target": "es6",
-        "allowJs": true,
+        "allowJs": false,
         "noImplicitAny": true,
         "moduleResolution": "node",
         "importHelpers": true,
         "lib": ["dom", "es5", "es6", "es7", "es2019"],
         "allowSyntheticDefaultImports": true
     },
-    "include": ["src/**/*.ts", "tests/**/*.ts"]
+    "include": ["src/**/*.ts", "tests/**/*.ts"],
+
 }

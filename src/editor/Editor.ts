@@ -68,8 +68,7 @@ export class Editor {
         }
 
         // Custom overlay mode used to handle edge cases
-        // @ts-ignore
-        const overlay_mode = window.CodeMirror.customOverlayMode;
+        const overlay_mode = window.CodeMirror.overlayMode;
         if (overlay_mode == null) {
             log_error(
                 new TemplaterError(

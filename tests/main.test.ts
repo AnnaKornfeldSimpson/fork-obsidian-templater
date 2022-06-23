@@ -32,7 +32,7 @@ export default class TestTemplaterPlugin extends Plugin {
     plugin: TemplaterPlugin;
     template_file: TFile;
     target_file: TFile;
-    active_files: Array<TAbstractFile> = new Array();
+    active_files: Array<TAbstractFile> = [];
 
     async onload() {
         this.addCommand({
@@ -49,9 +49,8 @@ export default class TestTemplaterPlugin extends Plugin {
 
     async setup() {
         await delay(300);
-        this.tests = new Array();
-        // @ts-ignore
-        this.plugin = this.app.plugins.getPlugin(PLUGIN_NAME);
+        this.tests = [];
+        this.plugin = this.app.plugins.getPlugin(PLUGIN_NAME) as TemplaterPlugin;
         this.plugin.settings.trigger_on_file_creation = false;
         this.plugin.event_handler.update_trigger_file_on_creation();
         this.target_file = await this.app.vault.create(
@@ -77,26 +76,22 @@ export default class TestTemplaterPlugin extends Plugin {
     }
 
     async disable_external_plugins() {
-        // @ts-ignore
         for (const plugin_name of Object.keys(this.app.plugins.plugins)) {
             if (
                 plugin_name !== PLUGIN_NAME &&
                 plugin_name !== this.manifest.id
             ) {
-                // @ts-ignore
                 await this.app.plugins.plugins[plugin_name].unload();
             }
         }
     }
 
     async enable_external_plugins() {
-        // @ts-ignore
         for (const plugin_name of Object.keys(this.app.plugins.plugins)) {
             if (
                 plugin_name !== PLUGIN_NAME &&
                 plugin_name !== this.manifest.id
             ) {
-                // @ts-ignore
                 await this.app.plugins.plugins[plugin_name].load();
             }
         }
@@ -115,7 +110,7 @@ export default class TestTemplaterPlugin extends Plugin {
     }
 
     async run_tests() {
-        for (let t of this.tests) {
+        for (const t of this.tests) {
             try {
                 await t.fn();
                 console.log("✅", t.name);
@@ -131,7 +126,7 @@ export default class TestTemplaterPlugin extends Plugin {
         while ((file = this.active_files.pop()) !== undefined) {
             try {
                 await this.app.vault.delete(file, true);
-            } catch (e) {}
+            } catch (e) { console.log("Error cleaning up files.") }
         }
     }
 
@@ -160,7 +155,7 @@ export default class TestTemplaterPlugin extends Plugin {
 
     async createFile(
         file_name: string,
-        file_content: string = ""
+        file_content = ""
     ): Promise<TFile> {
         const f = this.retrieveActiveFile(file_name);
         if (f && f instanceof TFile) {
@@ -174,9 +169,9 @@ export default class TestTemplaterPlugin extends Plugin {
 
     async run_and_get_output(
         template_content: string,
-        target_content: string = "",
-        waitCache: boolean = false,
-        skip_modify: boolean = false
+        target_content = "",
+        waitCache = false,
+        skip_modify = false
     ): Promise<string> {
         await this.app.vault.modify(this.template_file, template_content);
         if (!skip_modify) {

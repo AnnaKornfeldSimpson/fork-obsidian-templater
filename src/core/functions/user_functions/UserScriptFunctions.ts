@@ -10,8 +10,8 @@ export class UserScriptFunctions implements IGenerateObject {
     constructor(private app: App, private plugin: TemplaterPlugin) {}
 
     async generate_user_script_functions(
-    ): Promise<Map<string, Function>> {
-        const user_script_functions: Map<string, Function> = new Map();
+    ): Promise<Map<string, (...args: unknown[]) => unknown>> {
+        const user_script_functions: Map<string, (...args: unknown[]) => unknown> = new Map();
         const files = errorWrapperSync(
             () =>
                 get_tfiles_from_folder(
@@ -37,13 +37,13 @@ export class UserScriptFunctions implements IGenerateObject {
 
     async load_user_script_function(
         file: TFile,
-        user_script_functions: Map<string, Function>
+        user_script_functions: Map<string, (...args: unknown[]) => unknown>
     ): Promise<void> {
-        let req = (s: string) => {
+        const req = (s: string) => {
             return window.require && window.require(s);
         };
-        let exp: Record<string, unknown> = {};
-        let mod = {
+        const exp: Record<string, unknown> = {};
+        const mod = {
             exports: exp
         };
 
@@ -62,7 +62,7 @@ export class UserScriptFunctions implements IGenerateObject {
                 `Failed to load user script ${file.path}. Default export is not a function.`
             );
         }
-        user_script_functions.set(`${file.basename}`, user_function);
+        user_script_functions.set(`${file.basename}`, user_function as (...args: unknown[]) => unknown);
     }
 
     async generate_object(): Promise<Record<string, unknown>> {

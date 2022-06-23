@@ -101,7 +101,6 @@ export class CommandHandler {
     remove_template_hotkey(template: string): void {
         if (template) {
             // TODO: Find official way to do this
-            // @ts-ignore
             this.app.commands.removeCommand(
                 `${this.plugin.manifest.id}:${template}`
             );

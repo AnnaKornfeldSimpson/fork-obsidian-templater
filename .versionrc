@@ -5,8 +5,8 @@
       "type": "json"
     },
     {
-      "filename": "package-lock.json",
-      "type": "json"
+      "filename": "pnpm-lock.yaml",
+      "type": "yaml"
     },
     {
       "filename": "manifest.json",
