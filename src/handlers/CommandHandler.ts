@@ -4,6 +4,8 @@ import TemplaterPlugin from "main";
 import { resolve_tfile } from "utils/Utils";
 import { errorWrapperSync } from "utils/Error";
 
+//import { App } from "../obsidian-ex";
+
 export class CommandHandler {
     constructor(private app: App, private plugin: TemplaterPlugin) {}
 
@@ -101,7 +103,6 @@ export class CommandHandler {
     remove_template_hotkey(template: string): void {
         if (template) {
             // TODO: Find official way to do this
-            // @ts-ignore
             this.app.commands.removeCommand(
                 `${this.plugin.manifest.id}:${template}`
             );

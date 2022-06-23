@@ -1,6 +1,6 @@
 import { App, FuzzySuggestModal, TFile, TFolder } from "obsidian";
 import { get_tfiles_from_folder } from "utils/Utils";
-import TemplaterPlugin from "./main";
+import TemplaterPlugin from "../main";
 import { errorWrapperSync } from "utils/Error";
 import { log_error } from "utils/Log";
 

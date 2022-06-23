@@ -100,8 +100,8 @@ export class Templater {
     ): Promise<TFile> {
         // TODO: Maybe there is an obsidian API function for that
         if (!folder) {
-            const new_file_location = this.app.vault.getConfig("newFileLocation");
-            switch (new_file_location) {
+            folder = this.app.fileManager.getNewFileParent(this.app.workspace.getActiveFile()?.path ?? "");
+            /*switch (new_file_location) {
                 case "current": {
                     const active_file = this.app.workspace.getActiveFile();
                     if (active_file) {
@@ -117,13 +117,11 @@ export class Templater {
                     break;
                 default:
                     break;
-            }
+            }*/
         }
 
-        // TODO: Change that, not stable atm
-        const created_note = await this.app.fileManager.createNewMarkdownFile(
-            folder,
-            filename ?? "Untitled"
+        const created_note = await this.app.vault.create(
+            normalizePath(folder + "/" + (filename ?? "Untitled")), ""
         );
 
         let running_config: RunningConfig;

@@ -1,6 +1,10 @@
 import "obsidian";
 
 declare module "obsidian" {
+  export interface SearchComponent extends AbstractTextComponent<HTMLInputElement> {
+    containerEl: HTMLElement;
+  }
+
   interface Editor {
     cm: CodeMirror.Editor;
   }
@@ -21,7 +25,7 @@ declare module "obsidian" {
   }
 
   interface Vault {
-    config: Record<string, any>;
+    config: Record<string, unknown>;
     getConfig<T extends keyof VaultSettings>(setting: T): VaultSettings[T];
   }
 
@@ -33,8 +37,25 @@ declare module "obsidian" {
     isExtensionRegistered(extension: string): boolean;
   }
 
+  export interface CommandRegistry {
+    removeCommand(id: string): void;
+  }
+
+  export interface SettingRegistry {
+    activeTab: SettingTab;
+    openTabById(id: string): void;
+  }
+
+  export interface SettingTab {
+    searchInputEl: HTMLInputElement;
+    updateHotkeyVisibility(): void;
+  }
+
   export interface App {
+    commands: CommandRegistry;
     internalPlugins: InternalPlugins;
+
+    setting: SettingRegistry;
     viewRegistry: ViewRegistry;
   }
   export interface InstalledPlugin {
