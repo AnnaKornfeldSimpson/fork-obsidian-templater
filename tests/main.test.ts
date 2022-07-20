@@ -130,7 +130,7 @@ export default class TestTemplaterPlugin extends Plugin {
         }
     }
 
-    retrieveActiveFile(file_name: string): TAbstractFile {
+    retrieveActiveFile(file_name: string): TAbstractFile | null {
         for (const file of this.active_files) {
             if (file.name === file_name) {
                 return file;
@@ -139,7 +139,7 @@ export default class TestTemplaterPlugin extends Plugin {
         return null;
     }
 
-    async createFolder(folder_name: string): Promise<TFolder> {
+    async createFolder(folder_name: string): Promise<TFolder | null> {
         let folder = this.retrieveActiveFile(folder_name);
         if (folder && folder instanceof TFolder) {
             return folder;
