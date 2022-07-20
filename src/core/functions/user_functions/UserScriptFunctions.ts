@@ -2,16 +2,19 @@ import { App, TFile } from "obsidian";
 
 import TemplaterPlugin from "main";
 import { IGenerateObject } from "../IGenerateObject";
-import { RunningConfig } from "core/Templater";
 import { get_tfiles_from_folder } from "utils/Utils";
 import { errorWrapperSync, TemplaterError } from "utils/Error";
 
 export class UserScriptFunctions implements IGenerateObject {
     constructor(private app: App, private plugin: TemplaterPlugin) {}
 
-    async generate_user_script_functions(
-    ): Promise<Map<string, (...args: unknown[]) => unknown>> {
-        const user_script_functions: Map<string, (...args: unknown[]) => unknown> = new Map();
+    async generate_user_script_functions(): Promise<
+        Map<string, (...args: unknown[]) => unknown>
+    > {
+        const user_script_functions: Map<
+            string,
+            (...args: unknown[]) => unknown
+        > = new Map();
         const files = errorWrapperSync(
             () =>
                 get_tfiles_from_folder(
@@ -44,13 +47,17 @@ export class UserScriptFunctions implements IGenerateObject {
         };
         const exp: Record<string, unknown> = {};
         const mod = {
-            exports: exp
+            exports: exp,
         };
 
         const file_content = await this.app.vault.read(file);
-        const wrapping_fn = window.eval("(function anonymous(require, module, exports){" + file_content + "\n})");
+        const wrapping_fn = window.eval(
+            "(function anonymous(require, module, exports){" +
+                file_content +
+                "\n})"
+        );
         wrapping_fn(req, mod, exp);
-        const user_function = exp['default'] || mod.exports;
+        const user_function = exp["default"] || mod.exports;
 
         if (!user_function) {
             throw new TemplaterError(
@@ -62,11 +69,15 @@ export class UserScriptFunctions implements IGenerateObject {
                 `Failed to load user script ${file.path}. Default export is not a function.`
             );
         }
-        user_script_functions.set(`${file.basename}`, user_function as (...args: unknown[]) => unknown);
+        user_script_functions.set(
+            `${file.basename}`,
+            user_function as (...args: unknown[]) => unknown
+        );
     }
 
     async generate_object(): Promise<Record<string, unknown>> {
-        const user_script_functions = await this.generate_user_script_functions();
+        const user_script_functions =
+            await this.generate_user_script_functions();
         return Object.fromEntries(user_script_functions);
     }
 }

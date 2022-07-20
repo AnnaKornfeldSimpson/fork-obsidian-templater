@@ -15,8 +15,10 @@ import {
     is_module_name,
     ModuleName,
     TpSuggestDocumentation,
-    Documentation 
+    Documentation,
 } from "./TpDocumentation";
+import { TemplaterError } from "utils/Error";
+import { log_error } from "utils/Log";
 
 export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
     //private in_command = false;
@@ -37,7 +39,7 @@ export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
     onTrigger(
         cursor: EditorPosition,
         editor: Editor,
-        file: TFile
+        _file: TFile
     ): EditorSuggestTriggerInfo | null {
         const range = editor.getRange(
             { line: cursor.line, ch: 0 },
@@ -78,25 +80,23 @@ export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
     ): Array<TpSuggestDocumentation> {
         let suggestions: Array<TpSuggestDocumentation>;
         if (this.module_name && this.function_trigger) {
-            suggestions =
-                this.documentation.get_all_functions_documentation(
-                    this.module_name as ModuleName
-                );
+            suggestions = this.documentation.get_all_functions_documentation(
+                this.module_name as ModuleName
+            );
         } else {
-            suggestions =
-                this.documentation.get_all_modules_documentation();
+            suggestions = this.documentation.get_all_modules_documentation();
         }
         if (!suggestions) {
             return [];
         }
-        return suggestions.filter(s => s.name.startsWith(context.query));
+        return suggestions.filter((s) => s.name.startsWith(context.query));
     }
 
     renderSuggestion(value: TpSuggestDocumentation, el: HTMLElement): void {
         el.createEl("b", { text: value.name });
         el.createEl("br");
         if (this.function_trigger && is_function_documentation(value)) {
-            el.createEl("code", { text: value.definition }); 
+            el.createEl("code", { text: value.definition });
         }
         if (value.description) {
             el.createEl("div", { text: value.description });
@@ -105,12 +105,16 @@ export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
 
     selectSuggestion(
         value: TpSuggestDocumentation,
-        evt: MouseEvent | KeyboardEvent
+        _evt: MouseEvent | KeyboardEvent
     ): void {
         const active_view =
             this.app.workspace.getActiveViewOfType(MarkdownView);
         if (!active_view) {
-            // TODO: Error msg
+            log_error(
+                new TemplaterError(
+                    "Cannot find active view when suggestion selected."
+                )
+            );
             return;
         }
         active_view.editor.replaceRange(
@@ -118,9 +122,11 @@ export class Autocomplete extends EditorSuggest<TpSuggestDocumentation> {
             this.latest_trigger_info.start,
             this.latest_trigger_info.end
         );
-        if (this.latest_trigger_info.start.ch == this.latest_trigger_info.end.ch) {
+        if (
+            this.latest_trigger_info.start.ch == this.latest_trigger_info.end.ch
+        ) {
             // Dirty hack to prevent the cursor being at the
-            // beginning of the word after completion, 
+            // beginning of the word after completion,
             // Not sure what's the cause of this bug.
             const cursor_pos = this.latest_trigger_info.end;
             cursor_pos.ch += value.name.length;
