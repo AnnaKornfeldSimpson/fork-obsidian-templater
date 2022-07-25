@@ -11,7 +11,7 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "npm"
-      prefix-development: "npm dev"
+      prefix-development: "npm dev-dep"
       include: "scope"
  
   - package-ecosystem: "github-actions"
