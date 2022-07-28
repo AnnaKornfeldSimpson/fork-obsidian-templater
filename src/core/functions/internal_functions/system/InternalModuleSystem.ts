@@ -15,7 +15,9 @@ export class InternalModuleSystem extends InternalModule {
         this.static_functions.set("suggester", this.generate_suggester());
     }
 
-    async create_dynamic_templates(): Promise<void> { return; }
+    async create_dynamic_templates(): Promise<void> {
+        return;
+    }
 
     generate_clipboard(): () => Promise<string> {
         return async () => {
@@ -67,7 +69,7 @@ export class InternalModuleSystem extends InternalModule {
         items: T[],
         throw_on_cancel: boolean,
         placeholder: string,
-        limit?: number,
+        limit?: number
     ) => Promise<T> {
         return async <T>(
             text_items: string[] | ((item: T) => string),
@@ -81,7 +83,7 @@ export class InternalModuleSystem extends InternalModule {
                 text_items,
                 items,
                 placeholder,
-                limit,
+                limit
             );
             const promise = new Promise(
                 (

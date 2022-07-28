@@ -50,7 +50,9 @@ export default class TestTemplaterPlugin extends Plugin {
     async setup() {
         await delay(300);
         this.tests = [];
-        this.plugin = this.app.plugins.getPlugin(PLUGIN_NAME) as TemplaterPlugin;
+        this.plugin = this.app.plugins.getPlugin(
+            PLUGIN_NAME
+        ) as TemplaterPlugin;
         this.plugin.settings.trigger_on_file_creation = false;
         this.plugin.event_handler.update_trigger_file_on_creation();
         this.target_file = await this.app.vault.create(
@@ -126,7 +128,9 @@ export default class TestTemplaterPlugin extends Plugin {
         while ((file = this.active_files.pop()) !== undefined) {
             try {
                 await this.app.vault.delete(file, true);
-            } catch (e) { console.log("Error cleaning up files.") }
+            } catch (e) {
+                console.log("Error cleaning up files.");
+            }
         }
     }
 
@@ -153,10 +157,7 @@ export default class TestTemplaterPlugin extends Plugin {
         return folder;
     }
 
-    async createFile(
-        file_name: string,
-        file_content = ""
-    ): Promise<TFile> {
+    async createFile(file_name: string, file_content = ""): Promise<TFile> {
         const f = this.retrieveActiveFile(file_name);
         if (f && f instanceof TFile) {
             await this.app.vault.modify(f, file_content);

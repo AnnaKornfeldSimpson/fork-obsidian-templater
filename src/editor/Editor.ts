@@ -28,10 +28,15 @@ export class Editor {
 
     async setup(): Promise<void> {
         await this.registerCodeMirrorMode();
-        this.plugin.registerEditorSuggest(new Autocomplete(this.app, this.plugin));
+        this.plugin.registerEditorSuggest(
+            new Autocomplete(this.app, this.plugin)
+        );
     }
 
-    async jump_to_next_cursor_location(file: TFile = null, auto_jump = false): Promise<void> {
+    async jump_to_next_cursor_location(
+        file: TFile = null,
+        auto_jump = false
+    ): Promise<void> {
         if (auto_jump && !this.plugin.settings.auto_jump_to_cursor) {
             return;
         }
