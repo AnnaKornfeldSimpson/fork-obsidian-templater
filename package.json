@@ -34,7 +34,7 @@
         "cz-conventional-changelog": "^3.3.0",
         "detect-indent": "^7.0.0",
         "detect-newline": "^4.0.0",
-        "esbuild": "^0.14.50",
+        "esbuild": "^0.15.0",
         "esbuild-plugin-toml": "^0.0.1",
         "eslint": "^8.20.0",
         "obsidian": "github:obsidianmd/obsidian-api",
