@@ -1,4 +1,10 @@
-import { App, ButtonComponent, PluginSettingTab, Setting } from "obsidian";
+import {
+    App,
+    ButtonComponent,
+    HotKeysSettingsTab,
+    PluginSettingTab,
+    Setting,
+} from "obsidian";
 import { errorWrapperSync, TemplaterError } from "utils/Error";
 import { FolderSuggest } from "./suggesters/FolderSuggester";
 import { FileSuggest, FileSuggestMode } from "./suggesters/FileSuggester";
@@ -235,7 +241,8 @@ export class TemplaterSettingTab extends PluginSettingTab {
                             .onClick(() => {
                                 // TODO: Replace with future "official" way to do this
                                 this.app.setting.openTabById("hotkeys");
-                                const tab = this.app.setting.activeTab;
+                                const tab = this.app.setting
+                                    .activeTab as HotKeysSettingsTab;
                                 tab.searchInputEl.value = "Templater: Insert";
                                 tab.updateHotkeyVisibility();
                             });
